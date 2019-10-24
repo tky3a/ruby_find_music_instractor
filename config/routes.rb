@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  root 'home#index'
   # devise_for :instructor_users
   devise_for :instructor_users, controllers: {
   sessions:      'instructor_users/sessions',

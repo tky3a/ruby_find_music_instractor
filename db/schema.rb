@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_24_131044) do
+ActiveRecord::Schema.define(version: 2019_10_24_152318) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "住所", force: :cascade do |t|
     t.string "user_cd", limit: 40, null: false, comment: "ユーザコード"
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 2019_10_24_131044) do
     t.datetime "deleted_at", comment: "論理削除"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "admin"
     t.index ["address_id"], name: "index_users_on_address_id"
     t.index ["document_id"], name: "index_users_on_document_id"
     t.index ["email"], name: "index_users_on_email", unique: true
