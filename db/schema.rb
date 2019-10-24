@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_23_150629) do
+ActiveRecord::Schema.define(version: 2019_10_24_131044) do
 
   create_table "addresses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "住所", force: :cascade do |t|
     t.string "user_cd", limit: 40, null: false, comment: "ユーザコード"
@@ -24,10 +24,69 @@ ActiveRecord::Schema.define(version: 2019_10_23_150629) do
     t.index ["user_cd"], name: "index_addresses_on_user_cd"
   end
 
+  create_table "admins", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "管理者", force: :cascade do |t|
+    t.string "user_cd", limit: 40, null: false, comment: "ユーザコード"
+    t.string "name", limit: 30, null: false, comment: "名前"
+    t.string "email", default: "", null: false, comment: "メールアドレス"
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admins_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+    t.index ["user_cd"], name: "index_admins_on_user_cd"
+  end
+
   create_table "genres", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "instructor_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "インストラクター", force: :cascade do |t|
+    t.string "user_cd", limit: 40, null: false, comment: "ユーザコード"
+    t.integer "address_id", null: false, comment: "住所ID"
+    t.integer "document_id", comment: "ドキュメントID"
+    t.integer "genre_id", null: false, comment: "ジャンルID"
+    t.string "name", limit: 30, null: false, comment: "名前"
+    t.string "email", default: "", null: false, comment: "メールアドレス"
+    t.string "encrypted_password", default: "", null: false, comment: "パスワード"
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "deleted_at", comment: "論理削除"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["address_id"], name: "index_instructor_users_on_address_id"
+    t.index ["document_id"], name: "index_instructor_users_on_document_id"
+    t.index ["email"], name: "index_instructor_users_on_email", unique: true
+    t.index ["genre_id"], name: "index_instructor_users_on_genre_id"
+    t.index ["reset_password_token"], name: "index_instructor_users_on_reset_password_token", unique: true
+    t.index ["user_cd"], name: "index_instructor_users_on_user_cd"
+  end
+
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", comment: "一般ユーザ", force: :cascade do |t|
+    t.string "user_cd", limit: 40, null: false, comment: "ユーザコード"
+    t.integer "address_id", null: false, comment: "住所ID"
+    t.string "document_id", comment: "ドキュメントID"
+    t.integer "genre_id", null: false, comment: "ジャンルID"
+    t.string "name", limit: 30, null: false, comment: "名前"
+    t.string "email", default: "", null: false, comment: "メールアドレス"
+    t.string "encrypted_password", default: "", null: false, comment: "パスワード"
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "deleted_at", comment: "論理削除"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["address_id"], name: "index_users_on_address_id"
+    t.index ["document_id"], name: "index_users_on_document_id"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["genre_id"], name: "index_users_on_genre_id"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["user_cd"], name: "index_users_on_user_cd"
   end
 
 end

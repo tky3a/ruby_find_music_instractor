@@ -2,10 +2,15 @@
 
 class DeviseCreateUsers < ActiveRecord::Migration[5.2]
   def change
-    create_table :users do |t|
+    create_table :users, comment: "一般ユーザ" do |t|
       ## Database authenticatable
-      t.string :email,              null: false, default: ""
-      t.string :encrypted_password, null: false, default: ""
+      t.string :user_cd, limit: 40, index: true, foreign_key: true, null: false, comment: "ユーザコード"
+      t.integer :address_id, index: true, null: false, comment: "住所ID"
+      t.string :document_id, index: true, comment: "ドキュメントID"
+      t.integer :genre_id, index: true, null: false, comment: "ジャンルID"
+      t.string :name, limit: 30, null: false, comment: "名前"
+      t.string :email,              null: false, default: "", comment: "メールアドレス"
+      t.string :encrypted_password, null: false, default: "", comment: "パスワード"
 
       ## Recoverable
       t.string   :reset_password_token
@@ -31,8 +36,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       # t.integer  :failed_attempts, default: 0, null: false # Only if lock strategy is :failed_attempts
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
-
-
+      t.datetime :deleted_at, comment: "論理削除"
       t.timestamps null: false
     end
 

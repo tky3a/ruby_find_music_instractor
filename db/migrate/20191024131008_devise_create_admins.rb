@@ -2,10 +2,12 @@
 
 class DeviseCreateAdmins < ActiveRecord::Migration[5.2]
   def change
-    create_table :admins do |t|
+    create_table :admins, comment: "管理者" do |t|
+      t.string :user_cd, limit: 40, index: true, foreign_key: true, null: false, comment: "ユーザコード"
+      t.string :name, limit: 30, null: false, comment: "名前"
       ## Database authenticatable
-      t.string :email,              null: false, default: ""
-      t.string :encrypted_password, null: false, default: ""
+      t.string :email,              null: false, default: "", comment: "メールアドレス"
+      t.string :encrypted_password, null: false, default: "", commnet: "パスワード"
 
       ## Recoverable
       t.string   :reset_password_token
